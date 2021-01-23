@@ -23,7 +23,14 @@ class Api::V1::UsersController < ApplicationController
 
         if @user
             @user.destroy()
+             ActionMailer::Base.mail(
+              from: "me@example.com",
+              to: @user['email'],
+              subject: "Remove event",
+              body: "Your event," + @event_id + " has beed removed"
+            ).deliver
             render :json => { :message => 'Successfully deleted' }, status: 200
+
         else
             render :json => { :message => 'Invalid user' } , status: 400
         end
