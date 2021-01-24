@@ -22,6 +22,7 @@
 
 ## 2. Sign up for a event
 -    POST http://127.0.0.1:3000/api/v1/events/#event_id/users
+-    Input user email addres {"email": "xxx@yyy.com"}
 
 ## 3. Remove email address (user) from event
 -    DELETE  http://127.0.0.1:3000/api/v1/events/#event_id/users/#user_id
