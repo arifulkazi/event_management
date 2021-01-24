@@ -21,7 +21,7 @@
 -    GET http://127.0.0.1:3000/api/v1/events/
 
 ## 2. Sign up for a event
--    PUT http://127.0.0.1:3000/api/v1/events/#event_id
+-    POST http://127.0.0.1:3000/api/v1/events/#event_id/users
 
 ## 3. Remove email address (user) from event
 -    DELETE  http://127.0.0.1:3000/api/v1/events/#event_id/users/#user_id
