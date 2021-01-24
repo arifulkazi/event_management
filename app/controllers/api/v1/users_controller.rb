@@ -15,17 +15,23 @@ class Api::V1::UsersController < ApplicationController
         if @event
             @email = params.permit(:email)
             @email_val = @email['email']
-            @u_id = params[:event_id]
-            @user_exists = User.where(event_id: + @u_id ,email: +@email_val)
+            @e_id = params[:event_id]
+            @user_exists = User.where(event_id: + @e_id ,email: +@email_val)
 
             if(@user_exists.exists?)
                 render :json => { :message => 'This event is already sign up for this user' }, status: 400
                 return
             end 
-            @user = User.new(event_id: + @u_id ,email: +@email_val)
+            @user = User.new(event_id: + @e_id ,email: +@email_val)
             if @user.save
-                @message = "Event sign up successfuly. user id:" + @user['id'].to_s
-                 render :json => { :message => @message }, status: 200
+                @message = "Event," + @e_id + " sign up successfuly. user id:" + @user['id'].to_s
+                ActionMailer::Base.mail(
+                from: "me@example.com",
+                to: @email_val,
+                subject: "Signup event",
+                body: @message
+                 ).deliver
+                render :json => { :message => @message }, status: 200
             else
                 render :json => { :message => 'Event sign up faild' }, status: 400
             end
