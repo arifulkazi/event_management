@@ -58,7 +58,7 @@ class Api::V1::UsersController < ApplicationController
               from: "me@example.com",
               to: @user['email'],
               subject: "Remove event",
-              body: "Your event," + @event_id + " has beed removed"
+              body: "Your event," + @event_id + " has been removed."
             ).deliver
             render :json => { :message => 'Successfully deleted' }, status: 200
 
