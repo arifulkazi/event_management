@@ -24,10 +24,11 @@ class Api::V1::UsersController < ApplicationController
             end 
             @user = User.new(event_id: + @e_id ,email: +@email_val)
             if @user.save
-                @message = "Event," + @e_id + " sign up successfuly. user id:" + @user['id'].to_s
+                @message = "Event," + @e_id + " sign up successfuly. user id:" +
+                                          @user['id'].to_s + " email:" + @email_val
                 ActionMailer::Base.mail(
                 from: "me@example.com",
-                to: @email_val,
+                to: ENV['USER_NAME'],
                 subject: "Signup event",
                 body: @message
                  ).deliver
@@ -54,11 +55,13 @@ class Api::V1::UsersController < ApplicationController
 
         if @user
             @user.destroy()
+            @message = "Event," + @event_id + " has beed removed. user id:" +
+                                          @user_id.to_s + " email:" + @user['email']
              ActionMailer::Base.mail(
               from: "me@example.com",
-              to: @user['email'],
+              to:  ENV['USER_NAME'],
               subject: "Remove event",
-              body: "Your event," + @event_id + " has been removed."
+              body: @message
             ).deliver
             render :json => { :message => 'Successfully deleted' }, status: 200
 
